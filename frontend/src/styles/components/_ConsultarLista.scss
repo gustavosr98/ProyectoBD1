@@ -1,21 +1,93 @@
 .TituloTabla {
     text-align: center;
-    background: yellow;
+    background: $amarillo-claro;
+
+    h1 {
+        margin: 0;
+        margin-bottom: $xl-size;
+        padding: $s-size;
+        font-size: $xl-size;
+    }
 }
 
-.TituloTabla h1 {
-    margin: 0;
-    margin-bottom: $xl-size;
-    padding: $s-size;
+.ConsultarLista{
+    margin-top: $xl-size;
+}
+
+.MuiInput-underline::before, .MuiInput-underline:hover {
+    border-bottom: 0px solid black !important;
+}
+
+.MuiTableSortLabel-root.MuiTableSortLabel-active, .MuiTableSortLabel-icon, .MuiTableSortLabel-root:hover{
+    color: saturate($amarillo-claro, 10) !important;
+}
+
+.MuiInputBase-inputAdornedStart {
+    background: $azul-ucab !important;
+    border: none !important;
+    width: 60% !important;
+    padding-left: 10px !important;
+    padding-right: 40px !important;
+    color:white !important;
+    font-size: large !important;
+}
+
+.MuiInputBase-inputAdornedStart::placeholder {
+    color : white !important;
+    font-size: large !important;
+}
+
+.MuiInputAdornment-positionStart {
+    color : white !important;
+    margin-left: 250px !important;
+    margin-right: -300px !important;
+}
+
+.MuiInputAdornment-positionEnd {
+    color: $azul-ucab !important;
+}
+
+.MuiInputBase-formControl{
+    background: $azul-ucab !important;
+}
+
+.MuiInputAdornment-positionEnd {
+    display: none !important;
+}
+
+.MuiTablePagination-root {
+    font-size: 2rem !important;
+}
+
+.MuiTypography-root {
+    font-size: 2rem !important;
 }
 
 .Buscador {
     padding: 0 5%;
     width: 100%;
-}
+    margin-bottom: 5px;
 
-.Buscador input {
-    margin-right: $s-size;
+    input {
+        margin-right: $s-size;
+        background: $azul-ucab;
+        border: none;
+        width: 40%;
+        padding-left: 10px;
+        padding-right: 40px;
+        color:white;
+        z-index: -5;
+    }
+
+    input::placeholder {
+        color: white;
+    }
+
+    .field-icon {
+        margin-left: -40px;
+        margin-right: 20px;
+        color: white;
+    }
 }
 
 .Tabla {
@@ -26,12 +98,17 @@
 .Columnas {
     display: flex;
     flex-direction: row;
+    margin-bottom: -10px;
+    border-left: 1px solid $gris-claro;
+    border-right: 1px solid $gris-claro;
 }
 
 .TituloColumna {
     text-align: center;
+    border-left: 1px solid $gris-claro;
+    border-right: 1px solid $gris-claro;
     width: 20%;
-    background: $green;
+    background: $verde-ucab;
     color: white;
 }
 
@@ -39,16 +116,29 @@
     width: 100%;
     display: flex;
     flex-direction: row;
+    cursor: pointer;
+    margin-bottom: -10px;
+
+    .Atributo {
+        text-align: center;
+        width: 20%;
+        background: white;
+        color: $grey;
+        border-left: 1px solid $gris-claro;
+        border-right: 1px solid $gris-claro;
+        height: 100%;
+    }
 }
 
-.Tupla .Atributo {
-    text-align: center;
-    width: 20%;
-    background: white;
-    color: $grey;
+.FinalTabla {
+    border-top: 2px solid $gris-claro;
 }
 
 .IconoAgregar {
-    color:$green;
     cursor: pointer;
+}
+
+.IconoEliminar {
+    cursor: pointer;
+    margin-right: 10px;
 }
