@@ -40,3 +40,54 @@
   margin: 0 auto;
   width: 90%;
 }
+
+.Container-100p
+{
+  margin: 0 auto;
+  width: 100%;
+}
+
+.TotalAmountContainer
+{
+  color: white;
+  text-align: right;
+  margin: 50px auto 0px;
+  width: 90%;
+}
+
+.AmountSquare
+{
+  background: $naranja;
+  padding: 20px;
+  width: 490px;
+  display: inline-block;
+  text-align: left;
+}
+
+.bitContainer
+{
+  width: 100%;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+.bitContainer.green
+{
+  background: $verde-ucab;
+}
+.bitContainer.yellow
+{
+  background: $amarillo-ucab;
+}
+
+.bitContainer.blue
+{
+  background: $azul-ucab;
+}
+
+.bitContainer.grey
+{
+  background: grey;
+  color: black;
+}

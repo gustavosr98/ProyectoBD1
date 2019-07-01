@@ -4,7 +4,6 @@ import axios from 'axios';
 import {Redirect} from 'react-router-dom';
 import {Modal, Button} from 'react-bootstrap';
 import MaterialTable from 'material-table';
-
 import {cleanerCliente} from '../utils/cleaner';
 import {MenuDashBoard} from "../components/MenuDashBoard";
 
@@ -31,8 +30,9 @@ export class Cliente extends React.Component {
         this.setState({
             clientes : res.data.rows
         })
-
+          console.log(this.state)
       })
+
   }
 
   handleAgregar = () => {
@@ -105,7 +105,7 @@ export class Cliente extends React.Component {
               style={{margin: "0 5%"}}
               columns={[
                 {
-                  title: 'ID', field: 'c_id_cliente', type: 'string', headerStyle:{ textAlign : "center"}, defaultSort : 'asc',
+                  title: 'ID', field: 'c_id_cliente', type: 'string', headerStyle:{ textAlign : "center"}, defaultSort : 'desc',
                   cellStyle : {
                     fontSize : "large",
                     textAlign : "center"
@@ -208,7 +208,7 @@ export class Cliente extends React.Component {
               <p>
                 <span className="mc-atributo">Lugar</span>
                 {/* !!! OJO !!! AGREGAR EL NOMBRE DE LUGAR CON QUERY */}
-                <span> : {this.state.consultarCliente.lugar_id}</span>
+                <span> : Estado {this.state.consultarCliente.estado}, municipio {this.state.consultarCliente.municipio}, parroquia {this.state.consultarCliente.parroquia}</span>
               </p>
              
             </Modal.Body>
@@ -258,9 +258,9 @@ export class Cliente extends React.Component {
           }
 
           {!!this.state.modificarMineral 
-            && <Redirect to={`/editar/cliente/${this.state.modificarMineral}`} />
+            && <Redirect push to={`/editar/cliente/${this.state.modificarMineral}`} />
           }
-          {this.state.agregarPresionado && <Redirect to="/crear/cliente" />}
+          {this.state.agregarPresionado && <Redirect push to="/crear/cliente" />}
       </div>
     </div>  
   )

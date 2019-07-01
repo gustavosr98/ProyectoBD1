@@ -2,10 +2,10 @@ import React from 'react';
 import {MenuDashBoard} from "../components/MenuDashBoard";
 import {Dropdown} from "../components/Dropdown";
 import {InputText} from "../components/InputText";
-import {SectionTitle} from "../components/Header/SectionTitle";
 import {InputDate} from "../components/InputDate";
-import {Button} from "react-bootstrap";
 import {GuardarCancelar} from "../components/GuardarCancelar";
+// No hace falta aqui, ya esta en el componente
+import Swal from "sweetalert2";
 
 export class EmpleadosCrear extends React.Component {
     constructor(props){
@@ -38,16 +38,40 @@ export class EmpleadosCrear extends React.Component {
         )
     }
 
+    storeData()
+    {
+
+    }
+
+    handleChange = ({target}) => {
+        console.log(`nuevo_empleado.${target.name} = ${target.value}`)
+        this.setState({
+            nuevo_empleado :{
+                ...this.state.nuevo_empleado,
+                [target.name] : target.value
+            }
+        })
+    }
+
+
+
     render = () => (
         <div>
             <MenuDashBoard title="Crear empleado"/>
             <div className="RowContainer">
                 <div className="WideContainer">
                     <div className="FormContainer">
-                        <InputText id="CrearEmpleadoNombre" label="Nombre"/>
+                        <InputText
+                            id="CrearEmpleadoNombre"
+                            label="Nombre"
+                            name="e_nombre"
+                        />
                         <InputText id="CrearEmpleadoApellido" label="Apellido"/>
                         <InputText id="CrearEmpleadoCedula" label="Número de cédula"/>
-                        <Dropdown id="CrearEmpleadoCargo" placeholder="Cargo..." options={["Opción 1","Opción 2","Opción 3","Opción 4","Opción 5"]}/>
+                        <Dropdown id="CrearEmpleadoCargo" placeholder="Cargo..."
+                                  options={[
+                                      {text:"Opción 1",id:1},{text:"Opción 2",id:2},{text:"Opción 3",id:3},
+                                      {text:"Opción 4",id:4},{text:"Opción 5",id:5}]}/>
                     </div>
                 </div>
                 <div className="WideContainer">
@@ -58,9 +82,13 @@ export class EmpleadosCrear extends React.Component {
                             </div>
                             <InputDate/>
                         </div>
-                        <Dropdown id="CrearEmpleadoEstado" placeholder="Estado actual..." options={["Opción 1","Opción 2","Opción 3","Opción 4","Opción 5"]}/>
-                        <Dropdown id="CrearEmpleadoMunicipio" placeholder="Municipio actual..." options={["Opción 1","Opción 2","Opción 3","Opción 4","Opción 5"]}/>
-                        <Dropdown id="CrearEmpleadoParroquia" placeholder="Parroquia actual..." options={["Opción 1","Opción 2","Opción 3","Opción 4","Opción 5"]}/>
+                        <Dropdown id="CrearEmpleadoEstado" placeholder="Estado actual..." options={[
+                            {text:"Opción 1",id:1},{text:"Opción 2",id:2},{text:"Opción 3",id:3},
+                            {text:"Opción 4",id:4},{text:"Opción 5",id:5}]}/>
+                        <Dropdown id="CrearEmpleadoMunicipio" placeholder="Municipio actual..." options={[{text:"Opción 1",id:1},{text:"Opción 2",id:2}
+                            ,{text:"Opción 3",id:3},{text:"Opción 4",id:4},{text:"Opción 5",id:5}]}/>
+                        <Dropdown id="CrearEmpleadoParroquia" placeholder="Parroquia actual..." options={[{text:"Opción 1",id:1},{text:"Opción 2",id:2}
+                            ,{text:"Opción 3",id:3},{text:"Opción 4",id:4},{text:"Opción 5",id:5}]}/>
                     </div>
                 </div>
                 <div className="WideContainer">
@@ -82,13 +110,14 @@ export class EmpleadosCrear extends React.Component {
                                 <i className="zmdi zmdi-close-circle-o LabelIcon" onClick={()=>this.removeUser(i)}></i>
                             </div>
                             <div className="WideContainer">
-                                <InputText id={"CrearEmpleadoUsuarioCorreo"+i} label="Correo electrónico"/>
+                                <InputText styles={{width:"95%"}} id={"CrearEmpleadoUsuarioCorreo"+i} label="Correo electrónico"/>
                             </div>
                             <div className="WideContainer">
-                                <InputText id={"CrearEmpleadoUsuarioContra"+i} label="Contraseña inicial"/>
+                                <InputText styles={{width:"95%"}} id={"CrearEmpleadoUsuarioContra"+i} label="Contraseña inicial"/>
                             </div>
                             <div className="WideContainer">
-                                <Dropdown id={"CrearEmpleadoUsuarioRol"+i} placeholder="Rol..." options={["Opción 1","Opción 2","Opción 3","Opción 4","Opción 5"]}/>
+                                <Dropdown id={"CrearEmpleadoUsuarioRol"+i} placeholder="Rol..." options={[{text:"Opción 1",id:1},{text:"Opción 2",id:2}
+                                    ,{text:"Opción 3",id:3},{text:"Opción 4",id:4},{text:"Opción 5",id:5}]}/>
                             </div>
                         </div>
                     },this)
@@ -100,8 +129,19 @@ export class EmpleadosCrear extends React.Component {
                     Agregar usuario
                 </div>
             </div>
+            {/*
+                Otra forma de colocarlo
+                <GuardarCancelar 
+                    position="right" 
+                    accept={this.saveData} 
+                    decline={this.cancelData}
+                />
 
-            <GuardarCancelar position="right"/>
+                no hace falta pasar asi accept={ ()=>this.func() }
+                ya this.func es una func - acccep={this.func}
+            */}
+
+            <GuardarCancelar position="right" accept={()=>this.saveData()} decline={()=>(this.cancelData())}/>
         </div>
     )
 }

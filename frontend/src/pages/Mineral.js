@@ -16,7 +16,8 @@ export class Mineral extends React.Component {
       minerales : [],
       textoBuscardor : "",
       consultarMineral : null,
-      agregarPresionado : null
+      agregarPresionado : null,
+      compuestos : []
     }
   }
 
@@ -46,9 +47,22 @@ export class Mineral extends React.Component {
     console.log(`consultarMineral(${id})`)
     const consultarMineral = this.state.minerales.find( m => m.m_id_mineral == id)
 
-    this.setState({
-      consultarMineral
-    })
+
+    console.log(`----> localhost:4000/consultarLista/mineral/hijos`)
+    axios.post('http://127.0.0.1:4000/consultarLista/mineral/hijos',
+      { m_id_mineral : consultarMineral.m_id_mineral }
+    )
+      .then( (res) => {
+        if(res.status === 200)
+          console.log(`<---- (OK 200) localhost:4000/consultarLista/mineral/hijos`)
+
+          this.setState({
+            compuestos : res.data.rows,
+            consultarMineral : consultarMineral
+          })
+
+      })
+    
   }
 
   handleModificar = () => {
@@ -91,7 +105,8 @@ export class Mineral extends React.Component {
 
   handleCloseModal = () => {
     this.setState({
-      consultarMineral: null
+      consultarMineral: null,
+      compuestos : []
     })
   }
     
@@ -105,7 +120,7 @@ export class Mineral extends React.Component {
               style={{margin: "0 5%"}}
               columns={[
                 {
-                  title: 'ID', field: 'm_id_mineral', type: 'string', headerStyle:{ textAlign : "center"}, defaultSort : 'asc',
+                  title: 'ID', field: 'm_id_mineral', type: 'string', headerStyle:{ textAlign : "center"}, defaultSort : 'desc',
                   cellStyle : {
                     fontSize : "large",
                     textAlign : "center"
@@ -119,7 +134,7 @@ export class Mineral extends React.Component {
                   },
                 },
                 {
-                  title: '¿Metal?', field: 'm_metalico', type: 'string', headerStyle:{ textAlign : "center"},
+                  title: '¿Metal?', field: 'm_tipo', type: 'string', headerStyle:{ textAlign : "center"},
                   cellStyle : {
                     fontSize : "large",
                     textAlign : "center"
@@ -151,13 +166,22 @@ export class Mineral extends React.Component {
                 },
                 searchFieldAlignment: "left",
                 exportButton: true,
-                exportFileName: "Minerales"
+                exportFileName: "Minerales",
+
               }}
 
               onRowClick={(event, rowData) => this.handleConsultar(rowData.m_id_mineral)}
-              localization={{
+              localization={
+                  {
                 toolbar : {
                   searchPlaceholder : "Buscar ..."
+                },
+                pagination:
+                {
+                    labelRowsSelect: "Filas"
+                },
+                body: {
+                    emptyDataSourceMessage: "No hay entradas disponibles"
                 }
               }}
 
@@ -173,6 +197,8 @@ export class Mineral extends React.Component {
                   isFreeAction: true
                 }
               ]}
+
+
 
             />
           }
@@ -198,7 +224,7 @@ export class Mineral extends React.Component {
               </p>
               <p>
                 <span className="mc-atributo">¿Metal?</span>
-                <span> : {this.state.consultarMineral.m_metalico ? "Si" : "No"}</span>
+                <span> : {this.state.consultarMineral.m_tipo === "metal" ? "Si" : "No"}</span>
               </p>
               <p>
                 <span className="mc-atributo">¿Radioactivo?</span>
@@ -220,9 +246,9 @@ export class Mineral extends React.Component {
                 <p className="mc-multivalor">El mineral no se ha registrado en ningún yacimiento.</p>
               }
               <p><span className="mc-atributo">Compuesto de</span><span> :</span></p>
-              { this.state.consultarMineral.compuestos ?
-                this.state.consultarMineral.compuestos.map( (compuesto, i) => (
-                  <p className="mc-multivalor" key={i}>- {compuesto.nombre}</p>
+              { this.state.compuestos.length !== 0 ?
+                this.state.compuestos.map( (compuesto, i) => (
+                  <p className="mc-multivalor" key={i}>- {compuesto.m_nombre}</p>
                 )) :
                 <p className="mc-multivalor">El mineral no esta compuesto de otros minerales.</p>
               }
@@ -274,9 +300,9 @@ export class Mineral extends React.Component {
           }
 
           {!!this.state.modificarMineral 
-            && <Redirect to={`/editar/mineral/${this.state.modificarMineral}`} />
+            && <Redirect push to={`/editar/mineral/${this.state.modificarMineral}`} />
           }
-          {this.state.agregarPresionado && <Redirect to="/crear/mineral" />}
+          {this.state.agregarPresionado && <Redirect push to="/crear/mineral" />}
       </div>
     </div>  
   )
