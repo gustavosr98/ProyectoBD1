@@ -694,7 +694,7 @@ app.post('/consultar/empleado', (req, res) => {
   .then((resp_bd) => {
     console.log(`STATUS OK : 200`)      
     empleado["usuarios"] = resp_bd.rows
-    res.status(200).json({"rows" : empleado})
+    res.status(200).json({"rows" : [empleado]})
   })
   .catch( (bd_err) => {
     console.log(`STATUS ERROR: 500`)      
